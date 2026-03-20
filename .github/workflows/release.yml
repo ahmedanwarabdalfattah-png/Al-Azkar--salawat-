@@ -25,12 +25,11 @@ jobs:
         run: |
           flutter pub get
           export GRADLE_OPTS="-Dorg.gradle.jvmargs=-Xmx3G -XX:MaxMetaspaceSize=512m"
-          # غيرنا build apk --release لـ build apk --debug عشان نتخطى مشكلة التوقيع
           flutter build apk --debug --no-tree-shake-icons
       
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: azkar-app-apk
-          # غيرنا المسار ليكون app-debug.apk
-          path: alazkar/build/app/outputs/flutter-apk/app-debug.apk
+          # التعديل هنا: خليناه يدور في كل المجلدات لحد ما يلاقي أي ملف APK
+          path: alazkar/build/app/outputs/flutter-apk/*.apk
