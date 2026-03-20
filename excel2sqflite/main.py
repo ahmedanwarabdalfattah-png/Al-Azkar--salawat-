@@ -91,3 +91,9 @@ if __name__ == '__main__':
         map_xlsx_to_db(config)
     except Exception as e:
         print(f"An error occurred: {str(e)}")
+import pandas as pd
+import sqlite3
+import os
+
+# Instead of: df = pd.read_excel('data.xlsx')
+df = pd.read_csv('AZKAR -1darderoor.csv', encoding='utf-8-sig')  # handle BOM if present
