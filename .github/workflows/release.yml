@@ -6,6 +6,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: alazkar  # السطر ده هو "العلاج" اللي هيخليه يدخل للمجلد الصح
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -17,4 +20,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: azkar-app-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: alazkar/build/app/outputs/flutter-apk/app-release.apk # تأكدنا إن المسار هنا برضه بيبدأ بـ alazkar
