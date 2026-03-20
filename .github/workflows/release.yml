@@ -1,14 +1,12 @@
 name: Build and Release Alazkar
-
 on:
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
@@ -20,16 +18,18 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Set up Android NDK
+        uses: android-actions/setup-android@v3
+
       - name: Build APK
         working-directory: alazkar
         run: |
           flutter pub get
-          export GRADLE_OPTS="-Dorg.gradle.jvmargs=-Xmx3G -XX:MaxMetaspaceSize=512m"
-          flutter build apk --debug --no-tree-shake-icons
-      
+          export GRADLE_OPTS="-Dorg.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=1G -XX:+HeapDumpOnOutOfMemoryError"
+          flutter build apk --debug --no-tree-shake-icons --target-platform android-arm64 --verbose
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: azkar-app-apk
-          # التعديل هنا: خليناه يدور في كل المجلدات لحد ما يلاقي أي ملف APK
           path: alazkar/build/app/outputs/flutter-apk/*.apk
