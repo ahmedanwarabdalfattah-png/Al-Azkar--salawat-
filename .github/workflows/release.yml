@@ -24,12 +24,13 @@ jobs:
         working-directory: alazkar
         run: |
           flutter pub get
-          # زيادة مساحة الذاكرة المخصصة لبناء الأندرويد لحل مشكلة Java heap space
           export GRADLE_OPTS="-Dorg.gradle.jvmargs=-Xmx3G -XX:MaxMetaspaceSize=512m"
-          flutter build apk --release --no-tree-shake-icons
+          # غيرنا build apk --release لـ build apk --debug عشان نتخطى مشكلة التوقيع
+          flutter build apk --debug --no-tree-shake-icons
       
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: azkar-app-apk
-          path: alazkar/build/app/outputs/flutter-apk/app-release.apk
+          # غيرنا المسار ليكون app-debug.apk
+          path: alazkar/build/app/outputs/flutter-apk/app-debug.apk
